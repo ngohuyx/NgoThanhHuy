@@ -1,0 +1,190 @@
+﻿@model IVS.Models.Model.ItemModel
+@{
+    ViewBag.Title = "Item Detail";
+}
+<section class="content-header">
+    <h1>
+        Item Detail
+    </h1>
+    <ol class="breadcrumb">
+        <li><i class="fa fa-dashboard"></i> @Html.ActionLink("Home", "Index", "Home", null, new { })</a></li>
+        <li>@Html.ActionLink("Item", "Index", "Item", null, new { })</li>
+        <li class="active">Detail</li>
+    </ol>
+</section>
+@if (!String.IsNullOrEmpty((string)TempData["Error"]))
+{
+    <div id="error" class="error">
+        @TempData["Error"]
+    </div>
+}
+<section class="content">
+    <div class="row">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+                <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-body">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.code)
+                            <label class="lblRequirement">*</label>
+                            @Html.EditorFor(model => model.code, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.name)
+                            <label class="lblRequirement">*</label>
+                            @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.category_id)
+                            <br />
+                            @Html.DropDownListFor(m => m.category_id, (SelectList)ViewBag.Parent, "", new
+                       {
+                           @class = "form-control input-sm selectpicker",
+                           @disabled = "disabled",
+                           @id = "CategoryID"
+                       })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.discontinued_datetime)
+                            @Html.TextBoxFor(m => m.discontinued_datetime, new { @class = "form-control datepicker", @readonly = "readonly" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.inventory_measure_id)
+                            <br />
+                            @Html.DropDownListFor(m => m.inventory_measure_id, (SelectList)ViewBag.Measure, "", new
+                       {
+                           @class = "form-control input-sm selectpicker",
+                           @disabled = "disabled",
+                           @id = "inventory_measure_id"
+                       })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.inventory_expired)
+                            @Html.TextBoxFor(m => m.inventory_expired, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.inventory_standard_cost)
+                            @Html.TextBoxFor(m => m.inventory_standard_cost, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.inventory_list_price)
+                            @Html.TextBoxFor(m => m.inventory_list_price, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.specification)
+                            @Html.TextAreaFor(m => m.specification, new { @class = "form-control input-sm", maxlength = "256", @style = "height: 125px;", @readonly = "readonly" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.description)
+                            @Html.TextAreaFor(m => m.description, new { @class = "form-control input-sm", maxlength = "256", @style = "height: 125px;", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.manufacture_day)
+                            @Html.TextBoxFor(m => m.manufacture_day, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        <div class="form-group">
+                            @Html.CheckBoxFor(m => m.dangerous, new { @disabled = "disabled" })
+                            @Html.DisplayNameFor(m => m.dangerous)
+                        </div>
+                        <div class="form-group">
+                            @Html.CheckBoxFor(m => m.manufacture_make, new { @disabled = "disabled"})
+                            @Html.DisplayNameFor(m => m.manufacture_make)
+                        </div>
+                        <div class="form-group">
+                            @Html.CheckBoxFor(m => m.manufacture_tool, new { @disabled = "disabled" })
+                            @Html.DisplayNameFor(m => m.manufacture_tool)
+                        </div>
+                        <div class="form-group">
+                            @Html.CheckBoxFor(m => m.manufacture_finished_goods, new { @disabled = "disabled" })
+                            @Html.DisplayNameFor(m => m.manufacture_finished_goods)
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.manufacture_size)
+                            @Html.TextBoxFor(m => m.manufacture_size, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.manufacture_size_measure_id)
+                            <br />
+                            @Html.DropDownListFor(m => m.manufacture_size_measure_id, (SelectList)ViewBag.Measure, "", new
+                       {
+                           @class = "form-control input-sm selectpicker",
+                           @disabled = "disabled",
+                           @id = "manufacture_size_measure_id"
+                       })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.manufacture_weight)
+                            @Html.TextBoxFor(m => m.manufacture_weight, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.manufacture_weight_measure_id)
+                            <br />
+                            @Html.DropDownListFor(m => m.manufacture_weight_measure_id, (SelectList)ViewBag.Measure, "", new
+                       {
+                           @class = "form-control input-sm selectpicker",
+                           @disabled = "disabled",
+                           @id = "manufacture_weight_measure_id"
+                       })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.manufacture_style)
+                            @Html.TextBoxFor(m => m.manufacture_style, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.manufacture_class)
+                            @Html.TextBoxFor(m => m.manufacture_class, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.manufacture_color)
+                            @Html.TextBoxFor(m => m.manufacture_color, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    @Html.ActionLink("Back", "Index", "Item", new { }, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Edit", "Edit", "Item", new { @id = @Model.id }, new { @class = "btn btn-primary" })
+                </div>
+
+            </div>
+        }
+    </div>
+</section>
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#code').focus();
+        });
+        $('#CategoryID').selectpicker({
+            width: "280px",
+            liveSearch: true,
+            noneSelectedText: '',
+        });
+        $('#inventory_measure_id').selectpicker({
+            width: "280px",
+            liveSearch: true,
+            noneSelectedText: '',
+        });
+        $('#manufacture_weight_measure_id').selectpicker({
+            width: "280px",
+            liveSearch: true,
+            noneSelectedText: '',
+        });
+        $('#manufacture_size_measure_id').selectpicker({
+            width: "280px",
+            liveSearch: true,
+            noneSelectedText: '',
+        });
+        $('.selectpicker').selectpicker('setStyle', 'btn-sm', 'add');
+        $(function () {
+            $('#discontinued_datetime').datetimepicker();
+        });
+
+    </script>
+}
