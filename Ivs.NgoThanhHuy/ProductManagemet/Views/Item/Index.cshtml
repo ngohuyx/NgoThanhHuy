@@ -4,7 +4,7 @@
 }
 <section class="content-header">
     <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> @Html.ActionLink("Home", "Index", "Home", null, new { })</a></li>
+        <li><i class="fa fa-dashboard"></i><a> @Html.ActionLink("Home", "Index", "Home", null, new { })</a></li>
         <li class="active">Item</li>
     </ol>
 </section>
@@ -47,7 +47,7 @@
                             @Html.DisplayNameFor(m => m.name)
                             @Html.TextBoxFor(m => m.name, new { @class = "form-control" })
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             @Html.DisplayNameFor(m => m.category_id)
                             @Html.DropDownListFor(m => m.category_id, (SelectList)ViewBag.Parent, "", new
                                {
@@ -55,7 +55,7 @@
                                    @id = "CategoryID"
                                })
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <input name="btSearch" value="Search" class="btn btn-primary" type="submit" />
                         </div>
                     </div>

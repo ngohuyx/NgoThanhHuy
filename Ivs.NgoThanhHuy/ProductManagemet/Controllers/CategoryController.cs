@@ -17,34 +17,34 @@ namespace IVS.Web.Controllers
             _categoryBL = new CategoryBL();
         }
 
-        public ActionResult Index()
+        public ActionResult CategorySearch()
         {
             CategorySearchModel Model = new CategorySearchModel();
             if (Session[ScreenController] != null)
             {
                 Model = (CategorySearchModel)Session[ScreenController];
                 Model.searchResultModel = new List<CategoryViewModel>();
-                Model.searchResultModel = _categoryBL.Search(Model).ToPagedList(1, 200);
+                Model.searchResultModel = _categoryBL.Search(Model).ToPagedList(1, 100);
             }
             else
             {
-                Model.searchResultModel = new List<CategoryViewModel>().ToPagedList(1, 200);
+                Model.searchResultModel = new List<CategoryViewModel>().ToPagedList(1, 100);
             }
             return View(Model);
         }
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Index(int? page, CategorySearchModel Model)
+        public ActionResult CategorySearch(int? page, CategorySearchModel Model)
         {
             Model.searchResultModel = new List<CategoryViewModel>();
             Model.searchResultModel = _categoryBL.Search(Model);
             Session[ScreenController] = Model;
             var pageNumber = (page ?? 1);
-            var list = Model.searchResultModel.ToPagedList(pageNumber, 200);
+            var list = Model.searchResultModel.ToPagedList(pageNumber, 100);
             return PartialView("ListCategory", list);
         }
         #region ADD
-        public ActionResult Add()
+        public ActionResult CategoryAdd()
         {
             CategoryModel Model = new CategoryModel();
             ViewBag.Parent = new SelectList(_categoryBL.GetListParent(true), "id", "name");
@@ -52,7 +52,7 @@ namespace IVS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add(CategoryModel Model)
+        public ActionResult CategoryAdd(CategoryModel Model)
         {
             if (!ModelState.IsValid)
             {
@@ -74,16 +74,16 @@ namespace IVS.Web.Controllers
                 return View(Model);
             }
             TempData["Success"] = "Inserted Successfully!";
-            return RedirectToAction("Index");
+            return RedirectToAction("CategorySearch");
         }
         #endregion
         #region View & Edit
-        public ActionResult View(string id)
+        public ActionResult CategoryView(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
                 TempData["Error"] = "Data has already been deleted by other user!";
-                return RedirectToAction("Index");
+                return RedirectToAction("CategorySearch");
             }
 
             CategoryModel Model = new CategoryModel();
@@ -91,7 +91,7 @@ namespace IVS.Web.Controllers
             if (Model == null)
             {
                 TempData["Error"] = "Data has already been deleted by other user!";
-                return RedirectToAction("Index");
+                return RedirectToAction("CategorySearch");
             }
             if (!((int)Common.ReturnCode.Succeed == returnCode))
             {
@@ -100,12 +100,12 @@ namespace IVS.Web.Controllers
             ViewBag.Parent = new SelectList(_categoryBL.GetListParent(true), "id", "name");
             return View(Model);
         }
-        public ActionResult Edit(string id)
+        public ActionResult CategoryEdit(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
                 TempData["Error"] = "Data has already been deleted by other user!";
-                return RedirectToAction("Index");
+                return RedirectToAction("CategorySearch");
             }
 
             CategoryModel Model = new CategoryModel();
@@ -113,7 +113,7 @@ namespace IVS.Web.Controllers
             if (Model == null)
             {
                 TempData["Error"] = "Data has already been deleted by other user!";
-                return RedirectToAction("Index");
+                return RedirectToAction("CategorySearch");
             }
             if (!((int)Common.ReturnCode.Succeed == returnCode))
             {
@@ -123,7 +123,7 @@ namespace IVS.Web.Controllers
             return View(Model);
         }
         [HttpPost]
-        public ActionResult Edit(CategoryModel Model)
+        public ActionResult CategoryEdit(CategoryModel Model)
         {
             if (ModelState.IsValid)
             {
@@ -143,7 +143,7 @@ namespace IVS.Web.Controllers
                     return View(Model);
                 }
                 TempData["Success"] = "Updated Successfully!";
-                return RedirectToAction("View", new { @id = Model.id });
+                return RedirectToAction("CategoryView", new { @id = Model.id });
             }
             ViewBag.Parent = new SelectList(_categoryBL.GetListParent(true), "id", "name");
             return View(Model);
@@ -164,7 +164,7 @@ namespace IVS.Web.Controllers
             {
                 TempData["Error"] = lstMsg;
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("CategorySearch");
         }
         #endregion
     }

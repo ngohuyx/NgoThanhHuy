@@ -45,31 +45,34 @@
         <div class="panel panel-default">
             <div class="panel-heading">Home Page</div>
             <div class="panel-body">
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <a href="@Url.Action("Index", "Item", new { })">
-                        <svg class="glyph stroked app-window">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-app-window"></use>
-                        </svg>
-                        <pre class="text-center"> Item </pre>
-                    </a>
+                <div class="icon-grid">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <a href="@Url.Action("Index", "Item", new { })">
+                            <svg class="glyph stroked app-window">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-app-window"></use>
+                            </svg>
+                            <pre class="text-center"> Item </pre>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <a href="@Url.Action("Index", "Category", new { })">
+                            <svg class="glyph stroked clipboard with paper">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-clipboard-with-paper"></use>
+                            </svg>
+                            <pre class="text-center"> Category </pre>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <a href="@Url.Action("Index", "Measure", new { })" class="text-center">
+                            <svg class="glyph stroked blank document">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-blank-document">
+                                </use>
+                                <pre class="text-center"> Measure </pre>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <a href="@Url.Action("Index", "Category", new { })">
-                    <svg class="glyph stroked clipboard with paper">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-clipboard-with-paper"></use></svg>
-                        <pre class="text-center"> Category </pre> 
-                    </a>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <a href="@Url.Action("Index", "Measure", new { })" class="text-center">
-                    <svg class="glyph stroked blank document">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-blank-document">
-                    </use>
-                        <pre class="text-center"> Measure </pre>
-                    </svg>
-                    </a>
-                </div>
-                </div>
+            </div>
             </div>
         </div>
     </div>

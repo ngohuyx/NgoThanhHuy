@@ -308,11 +308,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Category\Add.cshtml" />
-    <Content Include="Views\Category\Edit.cshtml" />
-    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Category\CategoryAdd.cshtml" />
+    <Content Include="Views\Category\CategoryEdit.cshtml" />
+    <Content Include="Views\Category\CategorySearch.cshtml" />
     <Content Include="Views\Category\ListCategory.cshtml" />
-    <Content Include="Views\Category\View.cshtml" />
+    <Content Include="Views\Category\CategoryView.cshtml" />
     <Content Include="Views\Item\Add.cshtml" />
     <Content Include="Views\Item\Edit.cshtml" />
     <Content Include="Views\Item\Index.cshtml" />

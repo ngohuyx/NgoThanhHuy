@@ -24,7 +24,7 @@
             {
                 <tr>
                     <td>
-                        @Html.ActionLink(item.code, "View", "Category", new { @id = item.id }, new { })
+                        @Html.ActionLink(item.code, "CategoryView", "Category", new { @id = item.id }, new { })
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.name)
@@ -36,7 +36,7 @@
                         @Html.DisplayFor(modelItem => item.description)
                     </td>
                     <td style="text-align:center">
-                        <a href="@Url.Action("Edit", "Category", new { id = item.id })" title="Edit">Edit</a>
+                        <a href="@Url.Action("CategoryEdit", "Category", new { id = item.id })" title="Edit">Edit</a>
                         @using (Html.BeginForm("Delete", "Category", FormMethod.Post, new { id = "formDelete_" + item.id, @class = "form-inline", @style = "Display:inline" }))
                         {
                             @Html.Hidden("id", item.id);
@@ -50,7 +50,7 @@
             <tr>
                 <td colspan="100%">
                     <div class="success pull-right" >
-                        @Html.PagedListPager(Model, page => Url.Action("Index", "Category", new { page }),
+                        @Html.PagedListPager(Model, page => Url.Action("CategorySearch", "Category", new { page }),
                                 PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "divList" }))
                     </div>
                 </td>
