@@ -16,61 +16,66 @@
         @TempData["Error"]
     </div>
 }
-<section class="content">
-    <div class="row">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary()
-            <div class="box box-primary">
-                <div class="box-body">
-                    <div class="form-group">
-                        @Html.DisplayNameFor(m => m.code)
-                        <label class="lblRequirement">*</label>
-                        @Html.EditorFor(model => model.code, new { htmlAttributes = new { @class = "form-control" } })
-                    </div>
-                    <div class="form-group">
-                        @Html.DisplayNameFor(m => m.name)
-                        <label class="lblRequirement">*</label>
-                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-                    </div>
-                    <div class="form-group">
-                        @Html.DisplayNameFor(m => m.parent_id)
-                        <br />
-                        @Html.DropDownListFor(m => m.parent_id, (SelectList)ViewBag.Parent, new
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Advanced Table</div>
+            <div class="panel-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary()
+                    <div class="box box-primary">
+                        <div class="box-body">
+                            <div class="form-group">
+                                @Html.DisplayNameFor(m => m.code)
+                                <label class="lblRequirement">*</label>
+                                @Html.EditorFor(model => model.code, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <div class="form-group">
+                                @Html.DisplayNameFor(m => m.name)
+                                <label class="lblRequirement">*</label>
+                                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <div class="form-group">
+                                @Html.DisplayNameFor(m => m.parent_id)
+                                <br />
+                                @Html.DropDownListFor(m => m.parent_id, (SelectList)ViewBag.Parent, new
                    {
                        @class = "form-control input-sm selectpicker",
                        @id = "ParentID"
                    })
-                    </div>
-                    <div class="form-group">
-                        @Html.DisplayNameFor(m => m.description)
+                            </div>
+                            <div class="form-group">
+                                @Html.DisplayNameFor(m => m.description)
 
-                        @Html.TextAreaFor(m => m.description, new { @class = "form-control input-sm", maxlength = "256", @style = "height: 125px;" })
-                    </div>
-                </div>
+                                @Html.TextAreaFor(m => m.description, new { @class = "form-control input-sm", maxlength = "256", @style = "height: 125px;" })
+                            </div>
+                        </div>
 
-                <!-- /.box-body -->
-                <div class="box-footer">
-                    <input type="submit" value="Save" class="btn btn-primary" />
-                    @Html.ActionLink("Cancel", "Index", "Category", new { }, new { @class = "btn btn-default" })
-                </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                            @Html.ActionLink("Cancel", "Index", "Category", new { }, new { @class = "btn btn-default" })
+                        </div>
+                    </div>
+                }
             </div>
-        }
-    </div>
+            </div>
+        </div>
+    </div> <!-- end div row -->
+          
 
-</section>
-
-@section scripts {
-    <script>
-        $(document).ready(function () {
-            $('#code').focus();
-        });
-        $('#ParentID').selectpicker({
-            width: "280px",
-            liveSearch: true,
-            noneSelectedText: '',
-        });
-        $('.selectpicker').selectpicker('setStyle', 'btn-sm', 'add');
-    </script>
-}
+            @section scripts {
+                <script>
+                    $(document).ready(function () {
+                        $('#code').focus();
+                    });
+                    $('#ParentID').selectpicker({
+                        width: "280px",
+                        liveSearch: true,
+                        noneSelectedText: '',
+                    });
+                    $('.selectpicker').selectpicker('setStyle', 'btn-sm', 'add');
+                </script>
+            }

@@ -1,5 +1,4 @@
 ﻿@model IVS.Models.Model.MeasureModel
-
 @{
     ViewBag.Title = "Add Measure";
 }
@@ -13,51 +12,58 @@
 </section>
 @if (!String.IsNullOrEmpty((string)TempData["Error"]))
 {
-    <div id="error" class="error">
+    <div class="alert bg-danger" role="alert" id="error">
+        <svg class="glyph stroked cancel"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-cancel"></use></svg> @TempData["Error"]
+    </div>
+    @*<div id="error" class="error">
         @TempData["Error"]
-    </div>
+    </div>*@
 }
-<section class="content">
-    <div class="row">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary()
-            <div class="box box-primary">
-                <div class="box-body">
-                    <div class="form-group">
-                        @Html.DisplayNameFor(m => m.code)
-                        <label class="lblRequirement">*</label>
-                        @Html.EditorFor(model => model.code, new { htmlAttributes = new { @class = "form-control" } })
-                    </div>
-                    <div class="form-group">
-                        @Html.DisplayNameFor(m => m.name)
-                        <label class="lblRequirement">*</label>
-                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-                    </div>
-                    <div class="form-group">
-                        @Html.DisplayNameFor(m => m.description)
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Add New Measure</div>
+                            <div class="panel-body">
+                                <div class="col-md-6">
+                                        @using (Html.BeginForm())
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            @Html.ValidationSummary()
+                                            <div class="box box-primary">
+                                                <div class="box-body">
+                                                    <div class="form-group">
+                                                        @Html.DisplayNameFor(m => m.code)
+                                                        <label class="lblRequirement">*</label>
+                                                        @Html.EditorFor(model => model.code, new { htmlAttributes = new { @class = "form-control" } })
+                                                    </div>
+                                                    <div class="form-group">
+                                                        @Html.DisplayNameFor(m => m.name)
+                                                        <label class="lblRequirement">*</label>
+                                                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                                                    </div>
+                                                    <div class="form-group">
+                                                        @Html.DisplayNameFor(m => m.description)
 
-                        @Html.TextAreaFor(m => m.description, new { @class = "form-control input-sm", maxlength = "256", @style = "height: 125px;" })
-                    </div>
+                                                        @Html.TextAreaFor(m => m.description, new { @class = "form-control input-sm", maxlength = "256", @style = "height: 125px;" })
+                                                    </div>
+                                                </div>
+                                                <!-- /.box-body -->
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                <button type="reset" class="btn btn-default">Reset</button>
+                                               @Html.ActionLink("Cancel", "Index", "Measure", new { }, new { @class = "btn btn-default" })
+                                            </div>
+                                        }
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.col-->
                 </div>
+      <!-- end div row -->
 
-                <!-- /.box-body -->
-                <div class="box-footer">
-                    <input type="submit" value="Save" class="btn btn-primary" />
-                    @Html.ActionLink("Cancel", "Index", "Measure", new { }, new { @class = "btn btn-default" })
-                </div>
-            </div>
-        }
-    </div>
-
-</section>
-
-@section scripts {
-    <script>
-        $(document).ready(function () {
-            $('#code').focus();
-        });
-
-    </script>
-}
+            @section scripts {
+                <script>
+                    $(document).ready(function () {
+                        $('#code').focus();
+                    });
+                </script>
+            }

@@ -24,72 +24,78 @@
         </ul>
     </div>
 }
-<section class="content">
-    <div class="btn-action">
-        <ul class="float-left" style="margin-bottom:10px;">
-            <li>
-                @Html.ActionLink("Add New", "Add", "Category", new { }, new { @class = "btn btn-primary" })
-            </li>
-        </ul>
-    </div>
-    <div class="box box-default">
-        <div class="box-header">
-            @using (Ajax.BeginForm("Index", "Category", new AjaxOptions { UpdateTargetId = "divList" }, new { @class = "form-inline", role = "form" }))
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="btn-action">
+                    <ul class="float-left" style="margin-bottom:10px;">
+                        <li>
+                            @Html.ActionLink("Add New", "Add", "Category", new { }, new { @class = "btn btn-primary" })
+                        </li>
+                    </ul>
+                </div>
+                <div class="box box-default">
+                    <div class="box-header">
+                        @using (Ajax.BeginForm("Index", "Category", new AjaxOptions { UpdateTargetId = "divList" }, new { @class = "form-inline", role = "form" }))
             {
-                <table class="inputForm">
-                    <tr>
-                        <td class="width200">
-                            @Html.TextBoxFor(m => m.code, new
-                       {
-                           @class = "form-control input-sm",
-                           @placeholder = "Code",
-                       })
-                        </td>
-                        <td class="width200">
-                            @Html.TextBoxFor(m => m.name, new
-                       {
-                           @class = "form-control input-sm",
-                           @placeholder = "Name",
-                       })
-                        </td>
-                        <td style="text-align:left">
-                            <input name="btSearch" value="Search" class="btn btn-primary btn-sm" type="submit" />
-                        </td>
-                    </tr>
-                </table>
-            }
-        </div>
-        <div class="box-body">
-            <div class="table-responsive" id="divList">
-                @Html.Partial("ListCategory", Model.searchResultModel)
+                            <table class="inputForm">
+                                <tr>
+                                    <td class="width200">
+                                        @Html.TextBoxFor(m => m.code, new
+                                   {
+                                       @class = "form-control input-sm",
+                                       @placeholder = "Code",
+                                   })
+                                    </td>
+                                    <td class="width200">
+                                        @Html.TextBoxFor(m => m.name, new
+                                   {
+                                       @class = "form-control input-sm",
+                                       @placeholder = "Name",
+                                   })
+                                    </td>
+                                    <td style="text-align:left">
+                                        <input name="btSearch" value="Search" class="btn btn-primary btn-sm" type="submit" />
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                    </div>
+                    <div class="box-body">
+                        <div class="table-responsive" id="divList">
+                            @Html.Partial("ListCategory", Model.searchResultModel)
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
             </div>
         </div>
-        <!-- /.box-body -->
     </div>
-    <!-- /.box -->
+</div>
 
-</section>
-    @section scripts {
-        <script type="text/javascript">
-            function btnDeleteClick(id) {
-                bootbox.confirm({
-                    title: "Message",
-                    message: "Do you want to delete?",
-                    buttons: {
-                        cancel: {
-                            label: '<i class="fa fa-times"></i> Cancel'
-                        },
-                        confirm: {
-                            label: '<i class="fa fa-check"></i> OK'
-                        }
+@section scripts {
+    <script type="text/javascript">
+        function btnDeleteClick(id) {
+            bootbox.confirm({
+                title: "Message",
+                message: "Do you want to delete?",
+                buttons: {
+                    cancel: {
+                        label: '<i class="fa fa-times"></i> Cancel'
                     },
-                    callback: function (result) {
-                        if (result) {
-                            $("#formDelete_" + id).submit();
-                        }
+                    confirm: {
+                        label: '<i class="fa fa-check"></i> OK'
                     }
-                })
-            }
-            $("div.alert").delay(3000).slideUp();
-        </script>
-    }
+                },
+                callback: function (result) {
+                    if (result) {
+                        $("#formDelete_" + id).submit();
+                    }
+                }
+            })
+        }
+        $("div.alert").delay(3000).slideUp();
+    </script>
+}

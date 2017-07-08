@@ -49,7 +49,7 @@ namespace IVS.DAL.DAO
             }
             catch (Exception ex)
             {
-                lstMsg.Add("Exception Occurred.");
+                lstMsg.Add("Exception Occurred." + ex);
                 result = (int)Common.ReturnCode.UnSuccess;
             }
             return result;
@@ -71,7 +71,7 @@ namespace IVS.DAL.DAO
             }
             catch (Exception ex)
             {
-                lstMsg.Add("Exception Occurred.");
+                lstMsg.Add("Exception Occurred." + ex);
                 result = (int)Common.ReturnCode.UnSuccess;
             }
 
@@ -137,7 +137,7 @@ namespace IVS.DAL.DAO
             catch (Exception ex)
             {
                 returnCode = (int)Common.ReturnCode.UnSuccess;
-                lstMsg = "Exception Occurred.";
+                lstMsg = "Exception Occurred." + ex;
             }
 
             return returnCode;
