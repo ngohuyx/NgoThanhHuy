@@ -2,63 +2,94 @@
     ViewBag.Title = "Home Page";
 }
 
-@*<section class="content-header">
-    <h1>
-        Dashboard
-        <small>Control panel</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-    </ol>
-</section>*@
+<svg id="glyphs-sheet" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+    <defs>
+        <symbol id="stroked-blank-document" class="glyph-svg stroked" viewBox="0 0 34 44">
+            <g class="line" fill="none" stroke="#000" stroke-width="2" stroke-miterlimit="10">
+                <path d="M31 43H3c-1.105 0-2-.895-2-2V3c0-1.105.895-2 2-2h17.172c.53 0 1.04.21 1.414.586l10.828 10.828c.375.375.586.884.586 1.414V41c0 1.105-.895 2-2 2z"></path>
+                <path d="M21 1v9.952c0 1.105.895 2 2 2h10"></path>
+            </g>
+        </symbol>
+        
+        <symbol id="stroked-dashboard-dial" class="glyph-svg stroked" viewBox="0 0 44 32">
+            <g class="line" fill="none" stroke="#000" stroke-width="2" stroke-miterlimit="10">
+                <path d="M22 10v11"></path>
+                <circle cx="22" cy="24" r="3"></circle>
+                <path d="M22 4v3M13 6.412l1.5 2.598M6.412 13l2.598 1.5M4 22h3M40 22h-3M37.588 13l-2.598 1.5M31 6.412L29.5 9.01M41.514 29.714c1.134-2.848 1.677-5.993 1.426-9.302C42.143 9.907 33.437 1.464 22.91 1.02 10.9.51 1 10.1 1 22c0 2.73.536 5.327 1.487 7.716C2.794 30.486 3.53 31 4.36 31h35.28c.83 0 1.566-.515 1.874-1.286z"></path>
+            </g>
+        </symbol>
+        
+        <symbol id="stroked-clipboard-with-paper" class="glyph-svg stroked" viewBox="0 0 32 44">
+            <g class="line" fill="none" stroke="#000" stroke-width="2" stroke-miterlimit="10">
+                <path d="M23 5h6c1.105 0 2 .895 2 2v34c0 1.105-.895 2-2 2H3c-1.105 0-2-.895-2-2V7c0-1.105.895-2 2-2h6"></path>
+                <path d="M20 3c0-1.105-.895-2-2-2h-4c-1.105 0-2 .895-2 2h-2c-.552 0-1 .448-1 1v2c0 .552.448 1 1 1h12c.552 0 1-.448 1-1V4c0-.552-.448-1-1-1h-2zM12 16h16M5 14h4v4H5zM12 24h16M5 22h4v4H5zM12 32h16M5 30h4v4H5z"></path>
+            </g>
+        </symbol>
+        <symbol id="stroked-app-window" class="glyph-svg stroked" viewBox="0 0 44 38">
+            <g class="line" fill="none" stroke="#000" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="10">
+                <path d="M1 35V3c0-1.1.9-2 2-2h38c1.1 0 2 .9 2 2v32c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2zM43 9H1M4 5h2M7 5h2M10 5h2"></path>
+            </g>
+        </symbol>
+        <symbol id="stroked-app-window-with-content" class="glyph-svg stroked" viewBox="0 0 44 38">
+            <g class="line" fill="none" stroke="#000" stroke-width="2" stroke-miterlimit="10">
+                <path d="M1 35V3c0-1.1.9-2 2-2h38c1.1 0 2 .9 2 2v32c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2zM43 9H1M4 5h2M7 5h2M10 5h2M20 24h20M20 28h20M20 32h20" stroke-linejoin="round"></path>
+                <path d="M5 13h34.008v7H5zM5 24h12v8H5z"></path>
+            </g>
+        </symbol>
+    </defs>
+</svg>
 
-<!-- Main content -->
-@*<section class="content">
-    <!-- Small boxes (Stat box) -->
-    <div class="row">
-        <div class="col-lg-4 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-aqua">
-                <div class="inner">
-                    <h3>Category</h3>
-                    <br />
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Home Page</div>
+            <div class="panel-body">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <a href="@Url.Action("Index", "Item", new { })">
+                        <svg class="glyph stroked app-window">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-app-window"></use>
+                        </svg>
+                        <pre class="text-center"> Item </pre>
+                    </a>
                 </div>
-                <div class="icon">
-                    <i class="fa fa-list"></i>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <a href="@Url.Action("Index", "Category", new { })">
+                    <svg class="glyph stroked clipboard with paper">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-clipboard-with-paper"></use></svg>
+                        <pre class="text-center"> Category </pre> 
+                    </a>
                 </div>
-                <a href="@Url.Action("Index", "Category", new { })" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <a href="@Url.Action("Index", "Measure", new { })" class="text-center">
+                    <svg class="glyph stroked blank document">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#stroked-blank-document">
+                    </use>
+                        <pre class="text-center"> Measure </pre>
+                    </svg>
+                    </a>
+                </div>
+                </div>
             </div>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-4 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-green">
-                <div class="inner">
-                    <h3>Item</h3>
-                    <br />
-                </div>
-                <div class="icon">
-                    <i class="fa fa-cubes"></i>
-                </div>
-                <a href="@Url.Action("Index", "Item", new { })" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-4 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-yellow">
-                <div class="inner">
-                    <h3>Measure</h3>
-                    <br />
-                </div>
-                <div class="icon">
-                    <i class="fa fa-exchange"></i>
-                </div>
-                <a href="@Url.Action("Index", "Measure", new { })" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
     </div>
-    <!-- /.row -->
-</section>*@
+
+
+
+<script>
+    !function ($) {
+        $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
+            $(this).find('em:first').toggleClass("glyphicon-minus");
+        });
+        $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+    }(window.jQuery);
+
+    $(window).on('resize', function () {
+        if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+    })
+    $(window).on('resize', function () {
+        if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+    })
+</script>
+
+
