@@ -47,7 +47,7 @@
                             @Html.DisplayNameFor(m => m.name)
                             @Html.TextBoxFor(m => m.name, new { @class = "form-control" })
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             @Html.DisplayNameFor(m => m.category_id)
                             @Html.DropDownListFor(m => m.category_id, (SelectList)ViewBag.Parent, "", new
                                {

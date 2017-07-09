@@ -1,12 +1,20 @@
-﻿@model PagedList.IPagedList<IVS.Models.Model.ItemViewModel>
+﻿@model PagedList.StaticPagedList<IVS.Models.Model.ItemViewModel>
 @using PagedList.Mvc;
 
-<table class="table table-bordered table-hover" >
+@if (!String.IsNullOrEmpty((string)TempData["SearchCount"]))
+{
+    <div class="alert alert-info">
+        <strong>@TempData["SearchCount"]</strong>
+    </div>
+
+}
+<table class="table table-bordered table-hover">
     @if (Model != null)
     {
         <tr class="headerTable">
+            <th>No</th>
             <th>
-                 @Html.DisplayNameFor(model => model.FirstOrDefault().code)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().code)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().name)
@@ -17,12 +25,17 @@
             <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().description)
             </th>
-            <th>Option</th>
+            <th>Action</th>
         </tr>
         <tbody>
+            @{int No = ViewBag.No;}
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>
+                        @{No = No + 1;}
+                        @No
+                    </td>
                     <td>
                         @Html.ActionLink(item.code, "View", "Item", new { @id = item.id }, new { })
                     </td>
@@ -36,30 +49,31 @@
                         @Html.DisplayFor(modelItem => item.description)
                     </td>
                     <td style="text-align:center">
-                        <a href="@Url.Action("Edit", "Item", new { id = item.id })" title="Edit">Edit</a>
+                        <a href="@Url.Action("Edit", "Item", new { id = item.id })" class="btn btn-sm btn-info btn-flat">Edit</a>
                         @using (Html.BeginForm("Delete", "Item", FormMethod.Post, new { id = "formDelete_" + item.id, @class = "form-inline", @style = "Display:inline" }))
                         {
                             @Html.Hidden("id", item.id);
-                            <a href="#" class="btnDelete" id="@item.id" onclick="return btnDeleteClick(@item.id)">Delete</a>
+                            <a href="#" class="btn btn-sm btn-danger btn-flat" id="@item.id" onclick="return btnDeleteClick(@item.id)">Delete</a>
                         }
                     </td>
                 </tr>
-            }
+                            }
         </tbody>
         <tfoot>
             <tr>
                 <td colspan="100%">
-                    <div class="success pull-right" >
+                    <div class="success pull-right">
                         @Html.PagedListPager(Model, page => Url.Action("Index", "Item", new { page }),
                          PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "divList" }))
                     </div>
                 </td>
             </tr>
         </tfoot>
-    }
+                            }
 </table>
 @section scripts {
-    <script type="text/javascript">      
+    <script type="text/javascript">
+
         $(document).ready(function () {
             $('.selectpicker').selectpicker('setStyle', 'btn-sm', 'add');
         })

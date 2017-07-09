@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace IVS.DAL.DAO
 {
-   public class ItemDAO
+    public class ItemDAO
     {
         public IDbConnection _db;
         public ItemDAO()
@@ -20,15 +20,21 @@ namespace IVS.DAL.DAO
             _db = new MySqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnectionString"].ConnectionString);
         }
 
-        public List<ItemViewModel> Search(ItemSearchModel model)
+        public List<ItemViewModel> Search(int? page, ItemSearchModel model)
         {
+            int? start;
+            if (page != null)
+            {
+                start = (page - 1) * 200;
+            }
+            else start = 0;
             string strQuery = "SELECT item.`id`, item.`code`, item.`name`, cate.`name` category_name, item.`specification`, item.`description`  ";
-            strQuery += " FROM `product_item` item JOIN (SELECT `id`, `name` FROM `product_category` ";
-            strQuery += ((model.category_id) != null) ? " WHERE `id` IN ( @category ) OR `parent_id` IN ( @category ))" : ")";
-            strQuery += " cate ON item.`category_id` = cate.`id` WHERE 1";
+            strQuery += " FROM `product_item` item LEFT JOIN (SELECT c.`id`, cpp.`name` AS category_parent_name, c.`name` FROM product_category c Left JOIN (SELECT cp.`name`, cp.`id` FROM product_category cp ) cpp on cpp.`id` = c.`parent_id`) cate ON item.`category_id` = cate.`id` WHERE 1 ";
+            strQuery += ((model.category_id) != null) ? " AND (item.`category_id` = @category OR item.`category_id` IN (SELECT cate.`id` FROM product_category cate WHERE cate.`parent_id` = @category ))" : "";
             strQuery += (!string.IsNullOrEmpty(model.code)) ? " AND item.`code` LIKE @code" : "";
             strQuery += (!string.IsNullOrEmpty(model.name)) ? " AND item.`name` LIKE @name" : "";
-            var result = _db.Query<ItemViewModel>(strQuery, new { code = '%' + model.code + '%', name = '%' + model.name + '%', category = model.category_id }).ToList();
+            strQuery += " LIMIT @start,200 ";
+            var result = _db.Query<ItemViewModel>(strQuery, new { code = '%' + model.code + '%', name = '%' + model.name + '%', category = model.category_id, start = start }).ToList();
             return result;
         }
         //Insert data 
@@ -50,7 +56,7 @@ namespace IVS.DAL.DAO
                 strQuery += " VALUES (@category_id, @code, @name, @specification, @description, @dangerous, @discontinued_datetime, @inventory_measure_id, @inventory_expired";
                 strQuery += " , @inventory_standard_cost, @inventory_list_price, @manufacture_day, @manufacture_make, @manufacture_tool, @manufacture_finished_goods";
                 strQuery += " , @manufacture_size, @manufacture_size_measure_id, @manufacture_weight, @manufacture_weight_measure_id, @manufacture_style, @manufacture_class, @manufacture_color)";
-                
+
                 _db.Execute(strQuery, model);
             }
             catch (Exception ex)
@@ -206,6 +212,18 @@ namespace IVS.DAL.DAO
                 }
             }
             return isError;
+        }
+
+        public int Count(ItemSearchModel model)
+        {
+            int result;
+            string strQuery = "SELECT COUNT(item.id) ";
+            strQuery += " FROM `product_item` item LEFT JOIN (SELECT c.`id`, cpp.`name` AS category_parent_name, c.`name` FROM product_category c Left JOIN (SELECT cp.`name`, cp.`id` FROM product_category cp ) cpp on cpp.`id` = c.`parent_id`) cate ON item.`category_id` = cate.`id` WHERE 1 ";
+            strQuery += ((model.category_id) != null) ? " AND (item.`category_id` = @category OR item.`category_id` IN (SELECT cate.`id` FROM product_category cate WHERE cate.`parent_id` = @category ))" : "";
+            strQuery += (!string.IsNullOrEmpty(model.code)) ? " AND item.`code` LIKE @code" : "";
+            strQuery += (!string.IsNullOrEmpty(model.name)) ? " AND item.`name` LIKE @name" : "";
+            result = (_db.ExecuteScalar<int>(strQuery, new { code = '%' + model.code + '%', name = '%' + model.name + '%', category = model.category_id }));
+            return result;
         }
     }
 }

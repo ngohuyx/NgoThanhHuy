@@ -12,11 +12,11 @@ namespace IVS.Web.Controllers
 {
     public class ItemController : Controller
     {
-        public IItemBL _categoryBL;
+        public IItemBL _itemBL;
         public const string ScreenController = "Item";
         public ItemController()
         {
-            _categoryBL = new ItemBL();
+            _itemBL = new ItemBL();
         }
 
         public ActionResult Index()
@@ -25,34 +25,52 @@ namespace IVS.Web.Controllers
             if (Session[ScreenController] != null)
             {
                 Model = (ItemSearchModel)Session[ScreenController];
+                int Count = _itemBL.Count(Model);
                 Model.searchResultModel = new List<ItemViewModel>();
-                Model.searchResultModel = _categoryBL.Search(Model).ToPagedList(1, 100);
+                Model.searchResultModel = _itemBL.Search(Model);
+                Model.searchResultModel = new StaticPagedList<ItemViewModel>(Model.searchResultModel, 1, 200, Count);
+
             }
             else
             {
-                Model.searchResultModel = new List<ItemViewModel>().ToPagedList(1, 100);
+                Model.searchResultModel = new List<ItemViewModel>();
+                Model.searchResultModel = new StaticPagedList<ItemViewModel>(Model.searchResultModel, 1, 200, 0);
             }
-            ViewBag.Parent = new SelectList(_categoryBL.GetListCategory(true), "id", "name");
+            ViewBag.Parent = new SelectList(_itemBL.GetListCategory(true), "id", "name");
+            ViewBag.No = 0;
             return View(Model);
         }
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Index(int? page, ItemSearchModel Model)
         {
-            Model.searchResultModel = new List<ItemViewModel>();
-            Model.searchResultModel = _categoryBL.Search(Model);
-            Session[ScreenController] = Model;
+
+            List<ItemViewModel> list = new List<ItemViewModel>();
+            list = _itemBL.Search(Model, page);
+            if (page.HasValue && Session[ScreenController] != null)
+            {
+                Model = (ItemSearchModel)Session[ScreenController];
+            }
+            else
+            {
+                Session[ScreenController] = Model;
+            }
+
+            int Count = _itemBL.Count(Model);
+            TempData["SearchCount"] = Count + " row(s)";
             var pageNumber = (page ?? 1);
-            var list = Model.searchResultModel.ToPagedList(pageNumber, 100);
-            ViewBag.Parent = new SelectList(_categoryBL.GetListCategory(true), "id", "name");
-            return PartialView("ListItem", list);
+            ViewBag.No = (pageNumber - 1) * 200;
+            Model.searchResultModel = new StaticPagedList<ItemViewModel>(list, pageNumber, 200, Count);
+            ViewBag.Parent = new SelectList(_itemBL.GetListCategory(true), "id", "name");
+            ViewBag.CurrentFilter = Model;
+            return PartialView("ListItem", Model.searchResultModel);
         }
         #region ADD
         public ActionResult Add()
         {
             ItemModel Model = new ItemModel();
-            ViewBag.Parent = new SelectList(_categoryBL.GetListCategory(true), "id", "name");
-            ViewBag.Measure = new SelectList(_categoryBL.GetListMeasure(true), "id", "name");
+            ViewBag.Parent = new SelectList(_itemBL.GetListCategory(true), "id", "name");
+            ViewBag.Measure = new SelectList(_itemBL.GetListMeasure(true), "id", "name");
             return View(Model);
         }
 
@@ -61,16 +79,16 @@ namespace IVS.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Parent = new SelectList(_categoryBL.GetListCategory(true), "id", "name");
-                ViewBag.Mesure = new SelectList(_categoryBL.GetListMeasure(true), "id", "name");
+                ViewBag.Parent = new SelectList(_itemBL.GetListCategory(true), "id", "name");
+                ViewBag.Mesure = new SelectList(_itemBL.GetListMeasure(true), "id", "name");
                 return View(Model);
             }
             List<string> lstMsg = new List<string>();
-            int returnCode = _categoryBL.Insert(Model, out lstMsg);
+            int returnCode = _itemBL.Insert(Model, out lstMsg);
             if (!((int)Common.ReturnCode.Succeed == returnCode))
             {
-                ViewBag.Parent = new SelectList(_categoryBL.GetListCategory(true), "id", "name");
-                ViewBag.Mesure = new SelectList(_categoryBL.GetListMeasure(true), "id", "name");
+                ViewBag.Parent = new SelectList(_itemBL.GetListCategory(true), "id", "name");
+                ViewBag.Mesure = new SelectList(_itemBL.GetListMeasure(true), "id", "name");
                 if (lstMsg != null)
                 {
                     for (int i = 0; i < lstMsg.Count(); i++)
@@ -94,7 +112,7 @@ namespace IVS.Web.Controllers
             }
 
             ItemModel Model = new ItemModel();
-            int returnCode = _categoryBL.GetByID(long.Parse(id), out Model);
+            int returnCode = _itemBL.GetByID(long.Parse(id), out Model);
             if (Model == null)
             {
                 TempData["Error"] = "Data has already been deleted by other user!";
@@ -104,8 +122,8 @@ namespace IVS.Web.Controllers
             {
                 Model = new ItemModel();
             }
-            ViewBag.Measure = new SelectList(_categoryBL.GetListMeasure(true), "id", "name");
-            ViewBag.Parent = new SelectList(_categoryBL.GetListCategory(true), "id", "name");
+            ViewBag.Measure = new SelectList(_itemBL.GetListMeasure(true), "id", "name");
+            ViewBag.Parent = new SelectList(_itemBL.GetListCategory(true), "id", "name");
             return View(Model);
         }
         public ActionResult Edit(string id)
@@ -117,7 +135,7 @@ namespace IVS.Web.Controllers
             }
 
             ItemModel Model = new ItemModel();
-            int returnCode = _categoryBL.GetByID(long.Parse(id), out Model);
+            int returnCode = _itemBL.GetByID(long.Parse(id), out Model);
             if (Model == null)
             {
                 TempData["Error"] = "Data has already been deleted by other user!";
@@ -127,8 +145,8 @@ namespace IVS.Web.Controllers
             {
                 Model = new ItemModel();
             }
-            ViewBag.Measure = new SelectList(_categoryBL.GetListMeasure(true), "id", "name");
-            ViewBag.Parent = new SelectList(_categoryBL.GetListCategory(true), "id", "name");
+            ViewBag.Measure = new SelectList(_itemBL.GetListMeasure(true), "id", "name");
+            ViewBag.Parent = new SelectList(_itemBL.GetListCategory(true), "id", "name");
             return View(Model);
         }
         [HttpPost]
@@ -137,7 +155,7 @@ namespace IVS.Web.Controllers
             if (ModelState.IsValid)
             {
                 List<string> lstMsg = new List<string>();
-                int returnCode = _categoryBL.Update(Model, out lstMsg);
+                int returnCode = _itemBL.Update(Model, out lstMsg);
 
                 if (!((int)Common.ReturnCode.Succeed == returnCode))
                 {
@@ -148,15 +166,15 @@ namespace IVS.Web.Controllers
                             ModelState.AddModelError(string.Empty, lstMsg[i]);
                         }
                     }
-                    ViewBag.Measure = new SelectList(_categoryBL.GetListMeasure(true), "id", "name");
-                    ViewBag.Parent = new SelectList(_categoryBL.GetListCategory(true), "id", "name");
+                    ViewBag.Measure = new SelectList(_itemBL.GetListMeasure(true), "id", "name");
+                    ViewBag.Parent = new SelectList(_itemBL.GetListCategory(true), "id", "name");
                     return View(Model);
                 }
                 TempData["Success"] = "Updated Successfully!";
                 return RedirectToAction("Index", new { });
             }
-            ViewBag.Measure = new SelectList(_categoryBL.GetListMeasure(true), "id", "name");
-            ViewBag.Parent = new SelectList(_categoryBL.GetListCategory(true), "id", "name");
+            ViewBag.Measure = new SelectList(_itemBL.GetListMeasure(true), "id", "name");
+            ViewBag.Parent = new SelectList(_itemBL.GetListCategory(true), "id", "name");
             return View(Model);
         }
         #endregion
@@ -166,7 +184,7 @@ namespace IVS.Web.Controllers
         {
             string lstMsg = string.Empty;
 
-            int returnCode = _categoryBL.Delete(id, out lstMsg);
+            int returnCode = _itemBL.Delete(id, out lstMsg);
             if ((int)Common.ReturnCode.Succeed == returnCode)
             {
                 TempData["Success"] = "Deleted Successfully!";

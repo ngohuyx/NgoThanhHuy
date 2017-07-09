@@ -6,10 +6,11 @@
     <title>@ViewBag.Title - Product Management</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-select.min.css" rel="stylesheet" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-    <link href="~/Content/datepicker3.css" rel="stylesheet" />
     <link href="~/Content/styles.css" rel="stylesheet" />
     <script src="~/Scripts/lumino.glyphs.js"></script>
 </head>
@@ -54,7 +55,7 @@
 
         @RenderBody()
 </div>
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
@@ -62,11 +63,9 @@
     <script src="~/Scripts/bootstrap-select.min.js"></script>
     <script src="~/Scripts/respond.js"></script>
     <script src="~/Scripts/bootbox.js"></script>
-        @RenderSection("scripts", required: false)
-        <script>
-            $('#calendar').datepicker({
-            });
+     @RenderSection("scripts", required: false)
 
+        <script>
             !function ($) {
                 $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
                     $(this).find('em:first').toggleClass("glyphicon-minus");

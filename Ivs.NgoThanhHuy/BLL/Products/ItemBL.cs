@@ -10,16 +10,17 @@ namespace IVS.BL
 {
     public interface IItemBL
     {
-        List<ItemViewModel> Search(ItemSearchModel model);
+        List<ItemViewModel> Search(ItemSearchModel model, int? page = null);
         List<ListCategory> GetListCategory(bool hasEmpty);
         List<ListMeasure> GetListMeasure(bool hasEmpty);
         int GetByID(long ID, out ItemModel model);
+        int Count(ItemSearchModel model);
         int GetDetail(long ID, out ItemViewModel model);
         int Insert(ItemModel model, out List<string> lstMsg);
         int Update(ItemModel model, out List<string> lstMsg);
         int Delete(string id, out string lstMsg);
     }
-    public class ItemBL: IItemBL
+    public class ItemBL : IItemBL
     {
         public ItemDAO _itemDAO;
         public ItemBL()
@@ -32,9 +33,9 @@ namespace IVS.BL
             return _itemDAO.Delete(id, out lstMsg);
         }
 
-        public List<ItemViewModel> Search(ItemSearchModel model)
+        public List<ItemViewModel> Search(ItemSearchModel model, int? page = null)
         {
-            return _itemDAO.Search(model);
+            return _itemDAO.Search(page, model);
         }
         public int GetByID(long ID, out ItemModel model)
         {
@@ -44,7 +45,7 @@ namespace IVS.BL
         {
             return _itemDAO.GetDetail(ID, out model);
         }
-        
+
         public int Insert(ItemModel model, out List<string> lstMsg)
         {
             return _itemDAO.Insert(model, out lstMsg);
@@ -62,6 +63,11 @@ namespace IVS.BL
         public List<ListMeasure> GetListMeasure(bool hasEmpty)
         {
             return _itemDAO.GetListMeasure(hasEmpty);
+        }
+
+        public int Count(ItemSearchModel model)
+        {
+            return _itemDAO.Count(model);
         }
     }
 }
