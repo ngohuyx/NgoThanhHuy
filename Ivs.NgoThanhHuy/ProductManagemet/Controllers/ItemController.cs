@@ -19,7 +19,7 @@ namespace IVS.Web.Controllers
             _itemBL = new ItemBL();
         }
 
-        public ActionResult Index()
+        public ActionResult ItemSearch()
         {
             ItemSearchModel Model = new ItemSearchModel();
             if (Session[ScreenController] != null)
@@ -42,7 +42,7 @@ namespace IVS.Web.Controllers
         }
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Index(int? page, ItemSearchModel Model)
+        public ActionResult ItemSearch(int? page, ItemSearchModel Model)
         {
 
             List<ItemViewModel> list = new List<ItemViewModel>();
@@ -66,7 +66,7 @@ namespace IVS.Web.Controllers
             return PartialView("ListItem", Model.searchResultModel);
         }
         #region ADD
-        public ActionResult Add()
+        public ActionResult ItemAdd()
         {
             ItemModel Model = new ItemModel();
             ViewBag.Parent = new SelectList(_itemBL.GetListCategory(true), "id", "name");
@@ -75,7 +75,7 @@ namespace IVS.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add(ItemModel Model)
+        public ActionResult ItemAdd(ItemModel Model)
         {
             if (!ModelState.IsValid)
             {
@@ -99,16 +99,16 @@ namespace IVS.Web.Controllers
                 return View(Model);
             }
             TempData["Success"] = "Inserted Successfully!";
-            return RedirectToAction("Index");
+            return RedirectToAction("ItemSearch");
         }
         #endregion
         #region View & Edit
-        public ActionResult View(string id)
+        public ActionResult ItemView(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
                 TempData["Error"] = "Data has already been deleted by other user!";
-                return RedirectToAction("Index");
+                return RedirectToAction("ItemSearch");
             }
 
             ItemModel Model = new ItemModel();
@@ -116,7 +116,7 @@ namespace IVS.Web.Controllers
             if (Model == null)
             {
                 TempData["Error"] = "Data has already been deleted by other user!";
-                return RedirectToAction("Index");
+                return RedirectToAction("ItemSearch");
             }
             if (!((int)Common.ReturnCode.Succeed == returnCode))
             {
@@ -126,12 +126,12 @@ namespace IVS.Web.Controllers
             ViewBag.Parent = new SelectList(_itemBL.GetListCategory(true), "id", "name");
             return View(Model);
         }
-        public ActionResult Edit(string id)
+        public ActionResult ItemEdit(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
                 TempData["Error"] = "Data has already been deleted by other user!";
-                return RedirectToAction("Index");
+                return RedirectToAction("ItemSearch");
             }
 
             ItemModel Model = new ItemModel();
@@ -139,7 +139,7 @@ namespace IVS.Web.Controllers
             if (Model == null)
             {
                 TempData["Error"] = "Data has already been deleted by other user!";
-                return RedirectToAction("Index");
+                return RedirectToAction("ItemSearch");
             }
             if (!((int)Common.ReturnCode.Succeed == returnCode))
             {
@@ -150,7 +150,7 @@ namespace IVS.Web.Controllers
             return View(Model);
         }
         [HttpPost]
-        public ActionResult Edit(ItemModel Model)
+        public ActionResult ItemEdit(ItemModel Model)
         {
             if (ModelState.IsValid)
             {
@@ -171,7 +171,7 @@ namespace IVS.Web.Controllers
                     return View(Model);
                 }
                 TempData["Success"] = "Updated Successfully!";
-                return RedirectToAction("Index", new { });
+                return RedirectToAction("ItemSearch", new { });
             }
             ViewBag.Measure = new SelectList(_itemBL.GetListMeasure(true), "id", "name");
             ViewBag.Parent = new SelectList(_itemBL.GetListCategory(true), "id", "name");
@@ -193,7 +193,7 @@ namespace IVS.Web.Controllers
             {
                 TempData["Error"] = lstMsg;
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("ItemSearch");
         }
         #endregion
     }

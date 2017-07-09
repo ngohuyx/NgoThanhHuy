@@ -18,7 +18,7 @@ namespace IVS.Web.Controllers
         {
             _measureBL = new MeasureBL();
         }
-        public ActionResult Index()
+        public ActionResult MeasureSearch()
         {
             MeasureSearchModel Model = new MeasureSearchModel();
             if (Session[ScreenController] != null)
@@ -35,7 +35,7 @@ namespace IVS.Web.Controllers
         }
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Index(int? page, MeasureSearchModel Model)
+        public ActionResult MeasureSearch(int? page, MeasureSearchModel Model)
         {
             Model.searchResultModel = new List<MeasureViewModel>();
             Model.searchResultModel = _measureBL.Search(Model);
@@ -45,14 +45,14 @@ namespace IVS.Web.Controllers
             return PartialView("ListMeasure", list);
         }
         #region ADD
-        public ActionResult Add()
+        public ActionResult MeasureAdd()
         {
             MeasureModel Model = new MeasureModel();
             return View(Model);
         }
 
         [HttpPost]
-        public ActionResult Add(MeasureModel Model)
+        public ActionResult MeasureAdd(MeasureModel Model)
         {
             if (!ModelState.IsValid)
             {
@@ -72,16 +72,16 @@ namespace IVS.Web.Controllers
                 return View(Model);
             }
             TempData["Success"] = "Inserted Successfully!";
-            return RedirectToAction("Index");
+            return RedirectToAction("MeasureSearch");
         }
         #endregion
         #region View & Edit
-        public ActionResult View(string id)
+        public ActionResult MeasureView(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
                 TempData["Error"] = "Data has already been deleted by other user!";
-                return RedirectToAction("Index");
+                return RedirectToAction("MeasureSearch");
             }
 
             MeasureViewModel Model = new MeasureViewModel();
@@ -89,7 +89,7 @@ namespace IVS.Web.Controllers
             if (Model == null)
             {
                 TempData["Error"] = "Data has already been deleted by other user!";
-                return RedirectToAction("Index");
+                return RedirectToAction("MeasureSearch");
             }
             if (!((int)Common.ReturnCode.Succeed == returnCode))
             {
@@ -98,12 +98,12 @@ namespace IVS.Web.Controllers
 
             return View(Model);
         }
-        public ActionResult Edit(string id)
+        public ActionResult MeasureEdit(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
                 TempData["Error"] = "Data has already been deleted by other user!";
-                return RedirectToAction("Index");
+                return RedirectToAction("MeasureSearch");
             }
 
             MeasureModel Model = new MeasureModel();
@@ -111,7 +111,7 @@ namespace IVS.Web.Controllers
             if (Model == null)
             {
                 TempData["Error"] = "Data has already been deleted by other user!";
-                return RedirectToAction("Index");
+                return RedirectToAction("MeasureSearch");
             }
             if (!((int)Common.ReturnCode.Succeed == returnCode))
             {
@@ -120,7 +120,7 @@ namespace IVS.Web.Controllers
             return View(Model);
         }
         [HttpPost]
-        public ActionResult Edit(MeasureModel Model)
+        public ActionResult MeasureEdit(MeasureModel Model)
         {
             if (ModelState.IsValid)
             {
@@ -139,7 +139,7 @@ namespace IVS.Web.Controllers
                     return View(Model);
                 }
                 TempData["Success"] = "Updated Successfully!";
-                return RedirectToAction("View", new { @id = Model.id });
+                return RedirectToAction("MeasureView", new { @id = Model.id });
             }
             return View(Model);
         }
@@ -159,7 +159,7 @@ namespace IVS.Web.Controllers
             {
                 TempData["Error"] = lstMsg;
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("MeasureSearch");
         }
         #endregion
     }

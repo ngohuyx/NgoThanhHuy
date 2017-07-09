@@ -315,16 +315,16 @@
     <Content Include="Views\Category\CategorySearch.cshtml" />
     <Content Include="Views\Category\ListCategory.cshtml" />
     <Content Include="Views\Category\CategoryView.cshtml" />
-    <Content Include="Views\Item\Add.cshtml" />
-    <Content Include="Views\Item\Edit.cshtml" />
-    <Content Include="Views\Item\Index.cshtml" />
+    <Content Include="Views\Item\ItemAdd.cshtml" />
+    <Content Include="Views\Item\ItemEdit.cshtml" />
+    <Content Include="Views\Item\ItemSearch.cshtml" />
     <Content Include="Views\Item\ListItem.cshtml" />
-    <Content Include="Views\Item\View.cshtml" />
-    <Content Include="Views\Measure\Add.cshtml" />
-    <Content Include="Views\Measure\Edit.cshtml" />
-    <Content Include="Views\Measure\Index.cshtml" />
+    <Content Include="Views\Item\ItemView.cshtml" />
+    <Content Include="Views\Measure\MeasureAdd.cshtml" />
+    <Content Include="Views\Measure\MeasureEdit.cshtml" />
+    <Content Include="Views\Measure\MeasureSearch.cshtml" />
     <Content Include="Views\Measure\ListMeasure.cshtml" />
-    <Content Include="Views\Measure\View.cshtml" />
+    <Content Include="Views\Measure\MeasureView.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>

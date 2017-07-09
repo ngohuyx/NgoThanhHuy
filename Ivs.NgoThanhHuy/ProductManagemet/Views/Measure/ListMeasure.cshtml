@@ -5,16 +5,17 @@
     {
         <tr class="headerTable">
            
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.FirstOrDefault().code)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.FirstOrDefault().name)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.FirstOrDefault().description)
             </th>
-            <th>Option</th>
+            <th class="text-center"> Option
+            </th>
         </tr>
         <tbody>
             
@@ -22,17 +23,17 @@
             {
                 <tr>
 
-                    <td>
-                        @Html.ActionLink(item.code, "View", "Measure", new { @id = item.id }, new { })
+                    <td class="text-center">
+                        @Html.ActionLink(item.code, "MeasureView", "Measure", new { @id = item.id }, new { })
                     </td>
-                    <td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.name)
                     </td>
-                    <td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.description)
                     </td>
                     <td style="text-align:center">
-                        <a href="@Url.Action("Edit", "Measure", new { id = item.id })" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a href="@Url.Action("MeasureEdit", "Measure", new { id = item.id })" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
                         @using (Html.BeginForm("Delete", "Measure", FormMethod.Post, new { id = "formDelete_" + item.id, @class= "form-inline", @style="Display:inline" }))
                         {
                             @Html.Hidden("id", item.id);
@@ -46,7 +47,7 @@
             <tr>
                 <td colspan="100%">
                     <div class="success pull-right">
-                        @Html.PagedListPager(Model, page => Url.Action("Index", "Measure", new { page }),
+                        @Html.PagedListPager(Model, page => Url.Action("MeasureSearch", "Measure", new { page }),
                                 PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "divList" }))
                     </div>
                 </td>

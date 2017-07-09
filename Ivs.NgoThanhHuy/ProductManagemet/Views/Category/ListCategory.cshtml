@@ -5,42 +5,42 @@
     @if (Model != null)
     {
         <tr class="headerTable">
-            <th>
+            <th class="text-center">
                  @Html.DisplayNameFor(model => model.FirstOrDefault().code)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.FirstOrDefault().name)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.FirstOrDefault().parent_name)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.FirstOrDefault().description)
             </th>
-            <th>Option</th>
+            <th class="text-center">Option</th>
         </tr>
         <tbody>
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
+                    <td class="text-center">
                         @Html.ActionLink(item.code, "CategoryView", "Category", new { @id = item.id }, new { })
                     </td>
-                    <td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.name)
                     </td>
-                    <td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.parent_name)
                     </td>
-                    <td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.description)
                     </td>
                     <td style="text-align:center">
-                        <a href="@Url.Action("CategoryEdit", "Category", new { id = item.id })" title="Edit">Edit</a>
+                        <a href="@Url.Action("CategoryEdit", "Category", new { id = item.id })" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
                         @using (Html.BeginForm("Delete", "Category", FormMethod.Post, new { id = "formDelete_" + item.id, @class = "form-inline", @style = "Display:inline" }))
                         {
                             @Html.Hidden("id", item.id);
-                            <a href="#" class="btnDelete" id="@item.id" onclick="return btnDeleteClick(@item.id)">Delete</a>
+                            <a href="#" class="btnDelete" id="@item.id" onclick="return btnDeleteClick(@item.id)"><span class="glyphicon glyphicon-trash"></span></a>
                         }
                     </td>
                 </tr>

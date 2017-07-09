@@ -1,0 +1,59 @@
+﻿@model IVS.Models.Model.MeasureModel
+@{
+    ViewBag.Title = "Add Measure";
+}
+<section class="content-header">
+    <ol class="breadcrumb">
+        <li><i class="fa fa-dashboard"></i> @Html.ActionLink("Home", "Index", "Home", null, new { })</a></li>
+        <li>@Html.ActionLink("Measure", "MeasureSearch", "Measure", null, new { })</li>
+        <li class="active">Add</li>
+    </ol>
+</section>
+@if (!String.IsNullOrEmpty((string)TempData["Error"]))
+{
+    <div class="alert bg-danger" role="alert" id="error">
+        @TempData["Error"]
+    </div>
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Add New Measure</div>
+            <div class="panel-body">
+                <div class="col-md-6">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary()
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.code)
+                            <label class="lblRequirement">*</label>
+                            @Html.EditorFor(model => model.code, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <div class="form-group">
+                            @Html.DisplayNameFor(m => m.name)
+                            <label class="lblRequirement">*</label>
+                            @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <div class="form-group">
+                         @Html.DisplayNameFor(m => m.description)
+                         @Html.TextAreaFor(m => m.description, new { @class = "form-control input-sm", maxlength = "256", @style = "height: 125px;" })
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="reset" class="btn btn-default">Reset</button>
+                        @Html.ActionLink("Cancel", "MeasureSearch", "Measure", new { }, new { @class = "btn btn-default" })
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end div row -->
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#code').focus();
+        });
+    </script>
+}
